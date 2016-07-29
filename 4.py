@@ -7,29 +7,25 @@ class Solution(object):
         """
         m=len(nums1)
         n=len(nums2)
-        mid=(m+n)*1.0/2
-        if m==0 and n==0:
-            return 0
-        pointer1=pointer2=count=0
-        sum=length=0
-        while True:
-            if pointer1==m:
-                a=float("inf")
+        if m<n:
+            return self.findMedianSortedArrays(nums2,nums1)
+        low_l=low_r=0
+        high_l=high_r=m-1
+        while low_l<=high_r:
+            mid_l=(low_l+low_r)/2
+            mid_r=(high_l+high_r+1)/2
+            cut1_l=nums1[mid_l]
+            cut1_r=nums1[mid_r]
+            cut2_l=nums2[(m+n-mid_l-mid_r-2)/2]
+            cut2_r=nums2[(m+n-mid_l-mid_r-1)/2]
+            if cut1_l>cut2_r:           #shoule move to left
+                last_l=high_l=mid_l
+                last_r=high_r=mid_r
+            elif cut2_l>cut1_r:         #shoule moce t0 right
+                low_l=mid_l
+                low_r=mid_r
             else:
-                a=nums1[pointer1]
-            if pointer2==n:
-                b=float("inf")
-            else:
-                b=nums2[pointer2]
-            if a<b:
-                last=a
-                pointer1+=1
-            else:
-                last=b
-                pointer2+=1
-            count+=1
-            if count>=mid :
-                if count>mid+1:
-                    return sum*1.0/length
-                sum+=last
-                length+=1
+                return (max(cut1_l,cut2_l)+min(cut1_r,cut2_r))*1.0/2
+
+a=Solution()
+print a.findMedianSortedArrays([1],[3,4])
