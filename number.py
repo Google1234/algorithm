@@ -1,27 +1,18 @@
 class Solution(object):
-    def convert(self, s, numRows):
+    def reverse(self, x):
         """
-        :type s: str
-        :type numRows: int
-        :rtype: str
+        :type x: int
+        :rtype: int
         """
-        s_new=''
-        if numRows==1:
-            return s
-        for i in range(numRows):
-            pointer=i
-            if pointer<len(s):
-                s_new+=s[pointer]
-            odd=0
-            while True:
-                if odd%2==0:
-                    increase=2*(numRows-1-i)
-                else:
-                    increase=2*i
-                if increase!=0:
-                    pointer += increase
-                    if pointer>=len(s):
-                        break
-                    s_new += s[pointer]
-                odd+=1
-        return s_new
+        reverse=0
+        if x<0:
+            t=-1
+            x=x*t
+        else:
+            t=1
+        while x!=0:
+            reverse=((x%10)+reverse*10)
+            if reverse>2147483648:
+                return 0
+            x=x/10
+        return reverse*t
