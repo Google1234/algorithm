@@ -1,18 +1,39 @@
 class Solution(object):
-    def reverse(self, x):
+    def myAtoi(self, str):
         """
-        :type x: int
+        :type str: str
         :rtype: int
         """
-        reverse=0
-        if x<0:
-            t=-1
-            x=x*t
-        else:
-            t=1
-        while x!=0:
-            reverse=((x%10)+reverse*10)
-            if reverse>2147483648:
+        pointer=0
+        while pointer<len(str):
+            t=str[pointer]
+            if t==' ':
+                pointer+=1
+            elif t=='+' or t=='-' or (ord(t)-48>=0 and ord(t)-48<=9):
+                value = 0
+                if t=='+':
+                    posotive=1
+                elif t=='-':
+                    posotive=-1
+                else:
+                    posotive=1
+                    value=ord(t)-48
+                pointer += 1
+                if pointer==len(str) :
+                    return value
+                while pointer<len(str):
+                    t=ord(str[pointer])-48
+                    if t>=0 and t<=9:
+                        value=value*10+t
+                        pointer+=1
+                    else:
+                        break
+                if posotive*value>2147483647:
+                    return 2147483647
+                elif posotive*value<-2147483648:
+                    return -2147483648
+                else:
+                    return posotive*value
+            else:
                 return 0
-            x=x/10
-        return reverse*t
+        return 0
