@@ -1,25 +1,17 @@
 class Solution(object):
-    def isMatch(self, s, p):
+    def maxArea(self, height):
         """
-        :type s: str
-        :type p: str
-        :rtype: bool
+        :type height: List[int]
+        :rtype: int
         """
-        dp=[[False for i in range(len(s)+1)] for j in range(len(p)+1)]
-        dp[0][0]=True
-        for j in range(1,len(s)+1):
-            dp[0][j]=False
-        if len(p)>0:
-            dp[1][0]=False
-        for i in range(1,len(p)+1):
-            if p[i-1]=='*':
-                dp[i][0]=dp[i-2][0]
+        left=0
+        right=len(height)-1
+        most_water=0
+        while left<=right:
+            water=(right-left)*min(height[left],height[right])
+            most_water=max(water,most_water)
+            if height[left]<height[right]:
+                left+=1
             else:
-                dp[i][0]=False
-        for i in range(1,len(p)+1):
-            for j in range(1,len(s)+1):
-                if p[i-1]=='*':
-                    dp[i][j]=dp[i-2][j] or ((p[i-2]=='.' or p[i-2]==s[j-1])and dp[i][j-1])
-                else:
-                    dp[i][j]=(p[i-1]==s[j-1] or p[i-1]=='.') and  dp[i-1][j-1]
-        return dp[len(p)][len(s)]
+                right-=1
+        return most_water
