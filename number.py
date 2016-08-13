@@ -1,17 +1,20 @@
 class Solution(object):
-    def maxArea(self, height):
+    def longestCommonPrefix(self, strs):
         """
-        :type height: List[int]
-        :rtype: int
+        :type strs: List[str]
+        :rtype: str
         """
-        left=0
-        right=len(height)-1
-        most_water=0
-        while left<=right:
-            water=(right-left)*min(height[left],height[right])
-            most_water=max(water,most_water)
-            if height[left]<height[right]:
-                left+=1
-            else:
-                right-=1
-        return most_water
+        if len(strs)==0:
+            return ""
+        LCP=strs[0]
+        for index in range(1,len(strs)):
+            pointer1=0
+            pointer2=0
+            while pointer1<len(LCP) and pointer2<len(strs[index]):
+                if LCP[pointer1]==strs[index][pointer2]:
+                    pointer1+=1
+                    pointer2+=1
+                else:
+                    break
+            LCP=strs[index][:pointer2]
+        return LCP
