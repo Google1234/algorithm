@@ -1,8 +1,9 @@
 class Solution(object):
-    def threeSum(self, nums):
+    def threeSumClosest(self, nums, target):
         """
         :type nums: List[int]
-        :rtype: List[List[int]]
+        :type target: int
+        :rtype: int
         """
         if len(nums)<3:
             return []
@@ -10,36 +11,34 @@ class Solution(object):
         #quick sort
         self.quick_sort(0,len(nums)-1)
         #print self.list
-        triple=[]
         pointer1=0
         pointer2=1
         pointer3=len(self.list)-1
-        need=0-self.list[pointer1]
+        min_distance=float("inf")
+        sum=0
         while pointer1<=(len(self.list)-3):
             while pointer2<pointer3:
-                if self.list[pointer2]+self.list[pointer3]>need:
+                distance=(self.list[pointer1]+self.list[pointer2]+self.list[pointer3])-target
+                if abs(distance)<min_distance:
+                    min_distance=abs(distance)
+                    sum=self.list[pointer1]+self.list[pointer2]+self.list[pointer3]
+                if distance>0:
                     t=self.list[pointer3]
                     while pointer3>pointer2 and self.list[pointer3]==t :
                         pointer3-=1
-                elif self.list[pointer2]+self.list[pointer3]<need:
+                elif distance<0:
                     t=self.list[pointer2]
                     while pointer3>pointer2 and self.list[pointer2]==t :
                         pointer2+=1
                 else:
-                    triple.append([self.list[pointer1],self.list[pointer2],self.list[pointer3]])
-                    t=self.list[pointer2]
-                    while pointer3>pointer2 and self.list[pointer2]==t :
-                        pointer2+=1
-                    t=self.list[pointer3]
-                    while pointer3>pointer2 and self.list[pointer3]==t :
-                        pointer3-=1
+                    return target
             t = self.list[pointer1]
             while pointer1<=(len(self.list)-3) and self.list[pointer1] == t:
                 pointer1+=1
             pointer2=pointer1+1
             pointer3=len(self.list)-1
             need = 0 - self.list[pointer1]
-        return triple
+        return sum
     def quick_sort(self,left,right):
         if left==right:
             return 0
