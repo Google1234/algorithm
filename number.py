@@ -11,9 +11,9 @@ class Solution(object):
         self.list=nums
         self.quick_sort(0,len(nums)-1)
         pointer1=0
-        while pointer1<len(nums)-3:
+        while pointer1<len(nums)-3 and self.list[pointer1]<=target/4:
             pointer2=pointer1+1
-            while pointer2<len(nums)-2:
+            while pointer2<len(nums)-2 and self.list[pointer2]<=(target-self.list[pointer1])/3:
                 pointer3=pointer2+1
                 pointer4=len(nums)-1
                 need=target-self.list[pointer1]-self.list[pointer2]
@@ -72,5 +72,3 @@ class Solution(object):
                 pointer += 1
         for i in range(len(buff)):
             self.list[left + i] = buff[i]
-a=Solution()
-print a.fourSum([-499,-449,-410,-386,-384,-357,-332,-321,-304,-290,-248,-243,-240,-220,-216,-207,-199,-197,-183,-172,-169,-164,-149,-143,-111,-108,-84,-57,-51,-49,-48,-7,-4,10,17,66,111,149,170,174,176,188,198,205,216,257,311,313,327,330,334,335,358,375,375,380,392,422,442,461,466,487],3288)
