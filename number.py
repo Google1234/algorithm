@@ -1,25 +1,32 @@
 class Solution(object):
-    def isValid(self, s):
+    def mergeTwoLists(self, l1, l2):
         """
-        :type s: str
-        :rtype: bool
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
         """
-        n=len(s)
-        if n==0:
-            return True
-        if n%2!=0:
-            return False
-        stack=[' ' for i in xrange(n+1)]
-        length=0
-        for i in xrange(len(s)):
-            if s[i]=="(" or s[i]=="{" or s[i]=="[":
-                length += 1
-                stack[length]=s[i]
-            elif (s[i]==")" and stack[length]=="(") or (s[i]=="]" and stack[length]=="[") or (s[i]=="}" and stack[length]=="{"):
-                length-=1
+        if l1==None :
+            return l2
+        if l2==None:
+            return l1
+        pointer1=l1
+        pointer2=l2
+        begin=last=ListNode(0)
+        while pointer1!=None and pointer2!=None:
+            if pointer1.val>pointer2.val:
+                last.next=pointer2
+                pointer2=pointer2.next
             else:
-                return False
-        if length==0:
-            return True
-        else:
-            return False
+                last.next=pointer1
+                pointer1=pointer1.next
+            last=last.next
+        while pointer1!=None:
+            last.next=pointer1
+            last=last.next
+            pointer1=pointer1.next
+        while pointer2 != None:
+            last.next = pointer2
+            last=last.next
+            pointer2 = pointer2.next
+        return begin.next
+
