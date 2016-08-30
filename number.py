@@ -25,5 +25,3 @@ class Solution(object):
             else:
                 pointer+=1
                 offset=0
-
-aa
