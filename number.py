@@ -1,27 +1,27 @@
 class Solution(object):
-    def removeElement(self, nums, val):
+    def strStr(self, haystack, needle):
         """
-        :type nums: List[int]
-        :type val: int
+        :type haystack: str
+        :type needle: str
         :rtype: int
         """
-        length=len(nums)
-        if length==0 or val==None:
-            return length
-        left=0
-        right=length-1
+        haystack_length=len(haystack)
+        needle_length=len(needle)
+        if needle_length==0:
+            return 0
+        if haystack_length<needle_length:
+            return -1
+        pointer=0
+        offset=0
         while True:
-            while nums[left]!=val:
-                left+=1
-                if left>=right:
-                    if nums[right]==val:
-                        return right
-                    else:
-                        return right+1
-            while nums[right]==val:
-                right-=1
-                if right<=left:
-                    return left
-            nums[left]=nums[right]
-            left+=1
-            right-=1
+            while pointer<haystack_length and haystack[pointer]!=needle[0]:
+                pointer+=1
+            if pointer==haystack_length or haystack_length-pointer<needle_length:
+                return -1
+            while offset<needle_length and pointer+offset<haystack_length and haystack[pointer+offset]==needle[offset]:
+                offset+=1
+            if offset==needle_length:
+                return pointer
+            else:
+                pointer+=1
+                offset=0
