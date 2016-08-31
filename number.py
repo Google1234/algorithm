@@ -1,35 +1,26 @@
 class Solution(object):
-    def divide(self, dividend, divisor):
+    def nextPermutation(self, nums):
         """
-        :type dividend: int
-        :type divisor: int
-        :rtype: int
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
         """
-        if divisor==0:
-            return 2147483647
-        flag1=flag2=1
-        if dividend<0 :
-            flag1=-1
-            dividend=-dividend
-        if divisor<0:
-            flag2=-1
-            divisor=-divisor
-
-        result=0
-        while dividend>=divisor:
-            mul=0
-            while dividend>=(divisor<<(mul+1)):
-                mul+=1
-            result+=(1<<mul)
-            dividend-=(divisor<<mul)
-        if flag1!=flag2:
-            result=-result
-        if (flag1==flag2 and result>2147483647) :
-            result=2147483647
-        if (flag1!=flag2 and result>2147483648):
-            result=-2147483648
-        return result
-
-
-
+        length=len(nums)
+        current=length-2
+        while current>=0:
+            if nums[current]<nums[length-1]:
+                t=nums[current]
+                i=current+1
+                while i<length and nums[i]<=t:
+                    i+=1
+                nums[current]=nums[i]
+                nums[i]=t
+                break
+            else:
+                t=nums[current]
+                i=current+1
+                while i<length and nums[i]<t:
+                    nums[i-1]=nums[i]
+                    i+=1
+                nums[i-1]=t
+                current-=1
 
