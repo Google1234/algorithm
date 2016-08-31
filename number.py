@@ -1,27 +1,35 @@
 class Solution(object):
-    def strStr(self, haystack, needle):
+    def divide(self, dividend, divisor):
         """
-        :type haystack: str
-        :type needle: str
+        :type dividend: int
+        :type divisor: int
         :rtype: int
         """
-        haystack_length=len(haystack)
-        needle_length=len(needle)
-        if needle_length==0:
-            return 0
-        if haystack_length<needle_length:
-            return -1
-        pointer=0
-        offset=0
-        while True:
-            while pointer<haystack_length and haystack[pointer]!=needle[0]:
-                pointer+=1
-            if pointer==haystack_length or haystack_length-pointer<needle_length:
-                return -1
-            while offset<needle_length and pointer+offset<haystack_length and haystack[pointer+offset]==needle[offset]:
-                offset+=1
-            if offset==needle_length:
-                return pointer
-            else:
-                pointer+=1
-                offset=0
+        if divisor==0:
+            return 2147483647
+        flag1=flag2=1
+        if dividend<0 :
+            flag1=-1
+            dividend=-dividend
+        if divisor<0:
+            flag2=-1
+            divisor=-divisor
+
+        result=0
+        while dividend>=divisor:
+            mul=0
+            while dividend>=(divisor<<(mul+1)):
+                mul+=1
+            result+=(1<<mul)
+            dividend-=(divisor<<mul)
+        if flag1!=flag2:
+            result=-result
+        if (flag1==flag2 and result>2147483647) :
+            result=2147483647
+        if (flag1!=flag2 and result>2147483648):
+            result=-2147483648
+        return result
+
+
+
+
