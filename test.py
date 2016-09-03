@@ -1,2 +1,5 @@
-import tensorflow
-print 11
+d="ss"
+next=""
+next+="aa"
+next+=d[1]
+print next
