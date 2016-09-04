@@ -1,27 +1,18 @@
 class Solution(object):
-    def countAndSay(self, n):
+    def letterCombinations(self, digits):
         """
-        :type n: int
-        :rtype: str
+        :type digits: str
+        :rtype: List[str]
         """
-        t=1
-        next="1"
-        while True:
-            if t==n:
-                return next
-            t+=1
-            s=next+" "
-            next=""
-            pointer = 0
-            count = 0
-            while pointer<len(s):
-                if pointer==0:
-                    count=1
-                else:
-                    if s[pointer-1]==s[pointer]:
-                        count+=1
-                    else:
-                        next+=str(count)
-                        next+=s[pointer-1]
-                        count=1
-                pointer+=1
+        result=[]
+        s=[]
+        for i in xrange(len(digits)):
+            s.append(chr((ord(digits[i])-ord('2'))*3+ord('a')))
+        length=[3,3,3,3,3,3,3,4]
+        for i in xrange(len(digits)):
+            for j in xrange(length[ord(digits[i])-ord('2')]):
+                s[i]=chr((ord(digits[i])-ord('2'))*3+ord('a')+j)
+                result.append(''.join(s))
+        return result
+s=Solution()
+print s.letterCombinations("239")
