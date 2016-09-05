@@ -1,36 +1,26 @@
 class Solution(object):
-    def letterCombinations(self, digits):
+    def nextPermutation(self, nums):
         """
-        :type digits: str
-        :rtype: List[str]
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
         """
-        if len(digits)==0:
-            return []
-        s=['' for i in xrange(len(digits))]
-        count=[0 for i in xrange(len(digits))]
-        begin=['','','a','d','g','j','m','p','t','w']
-        max_count=[3 for i in xrange(len(digits))]
-        result=[]
-        for i in xrange(len(digits)):
-            if digits[i]=='9' or digits[i]=='7':
-                max_count[i]=4
-        deepth=0
-        while deepth>=0:
-            if deepth<len(digits)-1:
-                if count[deepth]<max_count[deepth]:
-                    s[deepth] = chr(ord(begin[int(digits[deepth])]) + count[deepth])
-                    count[deepth]+=1
-                    deepth+=1
-                else:
-                    count[deepth]=0
-                    deepth-=1
+        length=len(nums)
+        current=length-2
+        while current>=0:
+            if nums[current]<nums[length-1]:
+                t=nums[current]
+                i=current+1
+                while i<length and nums[i]<=t:
+                    i+=1
+                nums[current]=nums[i]
+                nums[i]=t
+                break
             else:
-                if count[deepth]<max_count[deepth]:
-                    s[deepth] = chr(ord(begin[int(digits[deepth])]) + count[deepth])
-                    count[deepth]+=1
-                    result.append( ''.join(s))
-                else:
-                    count[deepth]=0
-                    deepth-=1
-        return result
+                t=nums[current]
+                i=current+1
+                while i<length and nums[i]<t:
+                    nums[i-1]=nums[i]
+                    i+=1
+                nums[i-1]=t
+                current-=1
 
