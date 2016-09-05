@@ -1,18 +1,25 @@
 class Solution(object):
-    def letterCombinations(self, digits):
+    def nextPermutation(self, nums):
         """
-        :type digits: str
-        :rtype: List[str]
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
         """
-        result=[]
-        s=[]
-        for i in xrange(len(digits)):
-            s.append(chr((ord(digits[i])-ord('2'))*3+ord('a')))
-        length=[3,3,3,3,3,3,3,4]
-        for i in xrange(len(digits)):
-            for j in xrange(length[ord(digits[i])-ord('2')]):
-                s[i]=chr((ord(digits[i])-ord('2'))*3+ord('a')+j)
-                result.append(''.join(s))
-        return result
-s=Solution()
-print s.letterCombinations("239")
+        length=len(nums)
+        current=length-2
+        while current>=0:
+            if nums[current]<nums[length-1]:
+                t=nums[current]
+                i=current+1
+                while i<length and nums[i]<=t:
+                    i+=1
+                nums[current]=nums[i]
+                nums[i]=t
+                break
+            else:
+                t=nums[current]
+                i=current+1
+                while i<length and nums[i]<t:
+                    nums[i-1]=nums[i]
+                    i+=1
+                nums[i-1]=t
+                current-=1
