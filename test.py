@@ -1,2 +1,1 @@
-import tensorflow
-print 11
+print
