@@ -1,5 +1,3 @@
-d="ss"
-next=""
-next+="aa"
-next+=d[1]
-print next
+a=[1,2,3]
+a.pop()
+print a
