@@ -1,18 +1,25 @@
 class Solution(object):
-    def longestValidParentheses(self, s):
+    def search(self, nums, target):
         """
-        :type s: str
+        :type nums: List[int]
+        :type target: int
         :rtype: int
         """
-        s='#'+s
-        not_matched_position=[0]
-
-        max_length=0
-        for pointer in xrange(1,len(s)):
-            if s[pointer]==')' and s[not_matched_position[-1]]=='(':
-                not_matched_position.pop()
-                if pointer-not_matched_position[-1]>max_length:
-                    max_length=pointer-not_matched_position[-1]
+        left=0
+        right=len(nums)-1
+        while left<=right:
+            mid=(left+right)/2
+            if nums[mid]==target:
+                return mid
             else:
-                not_matched_position.append(pointer)
-        return max_length
+                if nums[mid]>=nums[left]:
+                    if target>=nums[left] and target<nums[mid]:
+                        right=mid
+                    else:
+                        left=mid+1
+                else:
+                    if target>=nums[left] or target<nums[mid]:
+                        right=mid
+                    else:
+                        left=mid+1
+        return -1
