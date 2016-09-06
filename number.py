@@ -6,6 +6,7 @@ class Solution(object):
         """
         s='#'+s
         not_matched_position=[0]
+
         max_length=0
         for pointer in xrange(1,len(s)):
             if s[pointer]==')' and s[not_matched_position[-1]]=='(':
