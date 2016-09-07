@@ -1,26 +1,38 @@
 class Solution(object):
-    def nextPermutation(self, nums):
+    def searchRange(self, nums, target):
         """
         :type nums: List[int]
-        :rtype: void Do not return anything, modify nums in-place instead.
+        :type target: int
+        :rtype: List[int]
         """
-        length=len(nums)
-        current=length-2
-        while current>=0:
-            if nums[current]<nums[length-1]:
-                t=nums[current]
-                i=current+1
-                while i<length and nums[i]<=t:
-                    i+=1
-                nums[current]=nums[i]
-                nums[i]=t
-                break
+        result=[-1,-1]
+        left=0
+        right=len(nums)-1
+        while left<=right:
+            mid=(left+right)/2
+            if nums[mid]==target:
+                right1=right
+                mid1=mid
+                right=mid
+                while left<right:
+                    mid=(left+right)/2
+                    if target<=nums[mid]:
+                        right=mid
+                    else:
+                        left=mid+1
+                result[0]=left
+                left=mid1
+                right=right1
+                while left<right:
+                    mid=(left+right+1)/2
+                    if target<nums[mid]:
+                        right=mid-1
+                    else:
+                        left=mid
+                result[1]=right
+                return result
+            elif target<nums[mid]:
+                right=mid-1
             else:
-                t=nums[current]
-                i=current+1
-                while i<length and nums[i]<t:
-                    nums[i-1]=nums[i]
-                    i+=1
-                nums[i-1]=t
-                current-=1
-
+                left=mid+1
+        return result
