@@ -1,38 +1,22 @@
 class Solution(object):
-    def searchRange(self, nums, target):
+    def searchInsert(self, nums, target):
         """
         :type nums: List[int]
         :type target: int
-        :rtype: List[int]
+        :rtype: int
         """
-        result=[-1,-1]
         left=0
         right=len(nums)-1
-        while left<=right:
+        while left<right:
             mid=(left+right)/2
             if nums[mid]==target:
-                right1=right
-                mid1=mid
-                right=mid
-                while left<right:
-                    mid=(left+right)/2
-                    if target<=nums[mid]:
-                        right=mid
-                    else:
-                        left=mid+1
-                result[0]=left
-                left=mid1
-                right=right1
-                while left<right:
-                    mid=(left+right+1)/2
-                    if target<nums[mid]:
-                        right=mid-1
-                    else:
-                        left=mid
-                result[1]=right
-                return result
-            elif target<nums[mid]:
-                right=mid-1
+                return mid
             else:
-                left=mid+1
-        return result
+                if nums[mid]<target:
+                    left=mid+1
+                else:
+                    right=mid-1
+        if target<=nums[left]:
+            return left
+        else:
+            return left+1
