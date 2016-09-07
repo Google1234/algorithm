@@ -1,22 +1,33 @@
 class Solution(object):
-    def searchInsert(self, nums, target):
+    def isValidSudoku(self, board):
         """
-        :type nums: List[int]
-        :type target: int
-        :rtype: int
+        :type board: List[List[str]]
+        :rtype: bool
         """
-        left=0
-        right=len(nums)-1
-        while left<right:
-            mid=(left+right)/2
-            if nums[mid]==target:
-                return mid
-            else:
-                if nums[mid]<target:
-                    left=mid+1
-                else:
-                    right=mid-1
-        if target<=nums[left]:
-            return left
-        else:
-            return left+1
+        if len(board)!=9 or len(board[0])!=9:
+            return False
+        for i in xrange(9):
+            dict={}
+            for j in xrange(9):
+                if board[i][j]!='.':
+                    if dict.has_key(board[i][j]):
+                        return False
+                    else:
+                        dict[board[i][j]]=0
+        for i in xrange(9):
+            dict = {}
+            for j in xrange(9):
+                if board[j][i] != '.':
+                    if dict.has_key(board[j][i]):
+                        return False
+                    else:
+                        dict[board[j][i]] = 0
+        for count in xrange(9):
+            dict={}
+            for j in xrange(9):
+                if board[3*(count/3)+j/3][3*(count%3)+j%3]!='.':
+                    if dict.has_key(board[3*(count/3)+j/3][3*(count%3)+j%3]):
+                        return False
+                    else:
+                        dict[board[3*(count/3)+j/3][3*(count%3)+j%3]] = 0
+        return True

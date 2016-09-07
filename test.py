@@ -1,4 +1,5 @@
-right=1
-right1=right
-right=0
-print right1
+dict={}
+dict['1']=1
+dict['2']=2
+dict={}
+print dict
