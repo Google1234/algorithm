@@ -1,20 +1,24 @@
-# Definition for a binary tree node.
-# class TreeNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
 class Solution(object):
-    def isSameTree(self, p, q):
+    def merge(self, nums1, m, nums2, n):
         """
-        :type p: TreeNode
-        :type q: TreeNode
-        :rtype: bool
+        :type nums1: List[int]
+        :type m: int
+        :type nums2: List[int]
+        :type n: int
+        :rtype: void Do not return anything, modify nums1 in-place instead.
         """
-        if p==None and q==None:
-            return True
-        if p!=None and q!=None and p.val==q.val and self.isSameTree(p.left,q.left) and self.isSameTree(p.right,q.right):
-            return True
-        else:
-            return False
+        pointer=m+n-1
+        m-=1
+        n-=1
+        while m>=0 and n>=0:
+            if nums1[m]<nums2[n]:
+                nums1[pointer]=nums2[n]
+                n-=1
+            else:
+                nums1[pointer]=nums1[m]
+                m-=1
+            pointer-=1
+        while n>=0:
+            nums1[pointer]=nums2[n]
+            pointer-=1
+            n-=1
