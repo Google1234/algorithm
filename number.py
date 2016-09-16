@@ -8,11 +8,10 @@ class Solution(object):
         candidates.sort()
         result=[]
         cur=[]
-
         pointer=0
         stack=[]
-
-        while pointer<len(candidates):
+        while True:
+            if pointer<len(candidates):
                 if target>0:
                     cur.append(candidates[pointer])
                     target-=candidates[pointer]
@@ -27,4 +26,9 @@ class Solution(object):
                     pointer=stack.pop()+1
                     while pointer<len(candidates) and candidates[pointer]==candidates[pointer-1]:
                         pointer+=1
+            else:
+                if len(cur)==0:
+                    return result
+                target+=cur.pop()
+                pointer=stack.pop()+1
         return result
