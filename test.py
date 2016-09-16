@@ -1,2 +1,3 @@
-a=[1,4,3]
-a.push(2)
+a=True
+b=True
+print a&b

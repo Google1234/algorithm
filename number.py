@@ -1,27 +1,23 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
 class Solution(object):
-    def combinationSum2(self, candidates, target):
+    def isSymmetric(self, root):
         """
-        :type candidates: List[int]
-        :type target: int
-        :rtype: List[List[int]]
+        :type root: TreeNode
+        :rtype: bool
         """
-        candidates.sort()
-        pointer=0
-        stack=[]
-        result=[]
-        while True:
-            if pointer<len(candidates) and candidates[pointer]<=target:
-                target -= candidates[pointer]
-                stack.append(pointer)
-                pointer += 1
-            else:
-                if target==0:
-                    result.append([candidates[i] for i in stack])
-                if len(stack) == 0:
-                    break
-                pointer = stack.pop()
-                target += candidates[pointer]
-                pointer += 1
-                while pointer < len(candidates) and candidates[pointer] == candidates[pointer - 1]:
-                    pointer += 1
-        return result
+        if root==None:
+            return True
+        return self.isEqual(root.left,root.right)
+    def isEqual(self,left_tree,right_tree):
+        if (left_tree==None and right_tree==None) or \
+                (left_tree!=None and right_tree!=None and left_tree.val==right_tree.val and
+                         (self.isEqual(left_tree.left,right_tree.right)&self.isEqual(left_tree.right,right_tree.left))==True):
+            return True
+        else:
+            return False
