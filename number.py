@@ -1,9 +1,7 @@
-# Definition for a binary tree node.
-# class TreeNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
+class quene(object):
+    def __init__(self,node,next=None):
+        self.val=node
+        self.next=next
 
 class Solution(object):
     def levelOrder(self, root):
@@ -11,15 +9,25 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[List[int]]
         """
-        self.result=[]
-        self.DFS(0,root)
-        return self.result
-
-    def DFS(self,lever,node):
-        if node!=None:
-            if lever>=len(self.result):
-                self.result.append([])
-            self.result[lever].append(node.val)
-            self.DFS(lever+1,node.left)
-            self.DFS(lever+1,node.right)
-
+        if root==None:
+            return []
+        tail=head=quene(root)
+        quene_size = 1
+        result=[]
+        while head!=None:
+            size=quene_size
+            quene_size=0
+            sub_list=[]
+            for i in xrange(size):
+                if head.val.left!=None:
+                    tail.next=quene(head.val.left)
+                    tail=tail.next
+                    quene_size+=1
+                if head.val.right!=None:
+                    tail.next=quene(head.val.right)
+                    tail=tail.next
+                    quene_size+=1
+                sub_list.append(head.val.val)
+                head=head.next
+            result.append(sub_list)
+        return result
