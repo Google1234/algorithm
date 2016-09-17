@@ -1,33 +1,22 @@
-class quene(object):
-    def __init__(self,node,next=None):
-        self.val=node
-        self.next=next
-
 class Solution(object):
-    def levelOrder(self, root):
+    def firstMissingPositive(self, nums):
         """
-        :type root: TreeNode
-        :rtype: List[List[int]]
+        :type nums: List[int]
+        :rtype: int
         """
-        if root==None:
-            return []
-        tail=head=quene(root)
-        quene_size = 1
-        result=[]
-        while head!=None:
-            size=quene_size
-            quene_size=0
-            sub_list=[]
-            for i in xrange(size):
-                if head.val.left!=None:
-                    tail.next=quene(head.val.left)
-                    tail=tail.next
-                    quene_size+=1
-                if head.val.right!=None:
-                    tail.next=quene(head.val.right)
-                    tail=tail.next
-                    quene_size+=1
-                sub_list.append(head.val.val)
-                head=head.next
-            result.append(sub_list)
-        return result
+        i=0
+        length=len(nums)
+        while i<length:
+            if nums[i]<i+1 and nums[i]>0 and nums[i]!=nums[nums[i]-1]:
+                t=nums[nums[i] - 1]
+                nums[nums[i]-1]=nums[i]
+                nums[i]=t
+            else:
+                i+=1
+        i=0
+        while i<length:
+            if nums[i]==i+1:
+                i+=1
+            else:
+                return i+1
+        return length+1
