@@ -1,3 +1,2 @@
-a=True
-b=True
-print a&b
+a='234'
+print a[-3]
