@@ -5,27 +5,31 @@ class Solution(object):
         :type p: str
         :rtype: bool
         """
-        matrix=[[False for i in xrange(len(p)+1)] for j in xrange(len(s)+1)]
-        matrix[len(s)][len(p)]=True
-        j=len(p)-1
-        while j>=0 and p[j]=='*':
-            matrix[len(s)][j]=True
-            j-=1
-        while j>=0:
-            matrix[len(s)][j]=False
-            j-=1
-        i=len(s)-1
-        while i>=0:
-            j = len(p) - 1
-            while j>=0:
-                if p[j]=='?' or p[j]==s[i]:
-                    matrix[i][j]=matrix[i+1][j+1]
-                elif p[j]=='*':
-                    matrix[i][j]=matrix[i][j+1]|matrix[i+1][j]
-                else:
-                        matrix[i][j]=False
-                j-=1
-            i-=1
-        return matrix[0][0]
+        s_pointer=0
+        p_pointer=0
+        last_p_pointer=-1
+        last_s_pointer=0
+        while s_pointer<len(s):
+            if p_pointer<len(p) and (p[p_pointer]=='?' or p[p_pointer]==s[s_pointer]):
+                p_pointer+=1
+                s_pointer+=1
+            elif p_pointer<len(p) and p[p_pointer]=='*':
+                last_p_pointer=p_pointer+1
+                last_s_pointer=s_pointer
+                p_pointer+=1
+            elif last_p_pointer>0:
+                last_s_pointer+=1
+                s_pointer=last_s_pointer
+                p_pointer=last_p_pointer
+            else:
+                return False
+        while p_pointer<len(p) and p[p_pointer]=='*':
+            p_pointer+=1
+        if p_pointer==len(p):
+            return True
+        else:
+            return False
+
+
 
 
