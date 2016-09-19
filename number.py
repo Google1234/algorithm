@@ -1,22 +1,14 @@
 class Solution(object):
-    def jump(self, nums):
+    def lengthOfLastWord(self, s):
         """
-        :type nums: List[int]
+        :type s: str
         :rtype: int
         """
-        if len(nums)==1:
-            return 0
         count=0
-        left=0
-        right=0
-        while True:
-            most_right=right
-            count += 1
-            while left<=right:
-                if left+nums[left]>most_right:
-                    most_right=left+nums[left]
-                    if most_right>=len(nums)-1:
-                        return count
-                left+=1
-            left=right+1
-            right=most_right
+        pointer=len(s)-1
+        while pointer>=0 and s[pointer]==' ':
+            pointer-=1
+        while pointer>=0 and s[pointer]!=' ':
+            pointer-=1
+            count+=1
+        return count
