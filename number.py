@@ -1,36 +1,29 @@
 class Solution(object):
-    def permute(self, nums):
+    def rotate(self, matrix):
         """
-        :type nums: List[int]
-        :rtype: List[List[int]]
+        :type matrix: List[List[int]]
+        :rtype: void Do not return anything, modify matrix in-place instead.
         """
-        self.length=len(nums)
-        self.nums=nums
-        self.result=[]
-        self.DFS(0)
-        return self.result
-    def DFS(self,begin):
-        if begin==self.length:
-            self.result.append([n for n in self.nums])
-        for i in xrange(begin,self.length):
-            buff=self.nums[i]
-            self.nums[i]=self.nums[begin]
-            self.nums[begin]=buff
-            self.DFS(begin+1)
-            buff=self.nums[i]
-            self.nums[i]=self.nums[begin]
-            self.nums[begin]=buff
-class Solution(object):
-    def permute(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
-        results=[[]]
-        for n in nums:
-            new=[]
-            for result in results:
-                for i in xrange(len(result)+1):
-                    new.append(result[:i]+[n]+result[i:])
-            results=new
-        return results
+        n=len(matrix)-1
+        origin_x=(n*1.0)/2
+        origin_y=(n*1.0)/2
+
+        x=0
+        y=0
+        while x<origin_x:
+            while y<origin_y:
+                source_x=x
+                source_y=y
+                buff=matrix[source_x][source_y]
+                for i in xrange(4):
+                    desitination_x=int(origin_x+source_y-origin_y)
+                    desitination_y=int(origin_y+origin_x-source_x)
+                    buff2=matrix[desitination_x][desitination_y]
+                    matrix[desitination_x][desitination_y]=buff
+                    source_x=desitination_x
+                    source_y=desitination_y
+                    buff=buff2
+                y+=1
+            x+=1
+s=Solution()
+print s.rotate(([[1,2],[3,4]]))
