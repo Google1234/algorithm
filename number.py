@@ -4,14 +4,16 @@ class Solution(object):
         :type matrix: List[List[int]]
         :rtype: void Do not return anything, modify matrix in-place instead.
         """
-        n=len(matrix)-1
-        origin_x=(n*1.0)/2
-        origin_y=(n*1.0)/2
-
-        x=0
-        y=0
-        while x<origin_x:
-            while y<origin_y:
+        origin_x=(0+len(matrix)-1.0)/2
+        origin_y=(0+len(matrix)-1.0)/2
+        if len(matrix)%2==0:
+            right=len(matrix)/2
+            down=len(matrix)/2
+        else:
+            right=len(matrix)/2+1
+            down=len(matrix)/2
+        for x in xrange(right):
+            for y in xrange(down):
                 source_x=x
                 source_y=y
                 buff=matrix[source_x][source_y]
@@ -23,7 +25,4 @@ class Solution(object):
                     source_x=desitination_x
                     source_y=desitination_y
                     buff=buff2
-                y+=1
-            x+=1
-s=Solution()
-print s.rotate(([[1,2],[3,4]]))
+        return matrix
