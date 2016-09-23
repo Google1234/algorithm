@@ -1,2 +1,2 @@
-r="12"
-print r[:1]
+a=['a','c']
+print str(a)
