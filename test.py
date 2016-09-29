@@ -1,2 +1,4 @@
-a=['a','c']
-print str(a)
+for i in xrange(10):
+    if i==5:
+        continue
+    print i
