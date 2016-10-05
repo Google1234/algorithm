@@ -1,30 +1,26 @@
-# Definition for singly-linked list.
-class ListNode(object):
-     def __init__(self, x):
-         self.val = x
-         self.next = None
 class Solution(object):
-    def rotateRight(self, head, k):
+    def uniquePaths(self, m, n):
         """
-        :type head: ListNode
-        :type k: int
-        :rtype: ListNode
+        :type m: int
+        :type n: int
+        :rtype: int
         """
-        if head==None:
-            return None
-        len=1
-        pointer=head
-        while pointer.next!=None:
-            pointer=pointer.next
-            len+=1
-        pointer.next=head
-        k=k%len
-        k=len-k
-        pointer=head
-        t=1
-        while t<k:
-            t+=1
-            pointer=pointer.next
-        result=pointer.next
-        pointer.next=None
-        return result
+        self.matrix=[[0 for i in xrange(n)] for j in xrange(m)]
+        for i in xrange(m):
+            self.matrix[i][0]=1
+        for i in xrange(n):
+            self.matrix[0][i]=1
+        return self.interation(m,n)
+    def interation(self,m,n):
+        if m==0 or n==0:
+            return 0
+        if self.matrix[m-1][n-1]!=0:
+            return self.matrix[m-1][n-1]
+        if m==1 or n==1:
+            self.matrix[m-1][n-1]=1
+        else:
+            self.matrix[m-1][n-1]=self.interation(m-1,n)+self.interation(m,n-1)
+        return self.matrix[m-1][n-1]
+
+s=Solution()
+print s.uniquePaths(3,7)
