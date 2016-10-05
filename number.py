@@ -4,28 +4,29 @@ class Solution(object):
         :type obstacleGrid: List[List[int]]
         :rtype: int
         """
-        self.m=len(obstacleGrid)
-        self.n=len(obstacleGrid[0])
-        self.matrix=[[-1 for i in xrange(self.n)] for j in xrange(self.m)]
-        self.matrix[self.m-1][self.n-1]=1
-        self.obstacleGrid=obstacleGrid
-        if obstacleGrid[0][0]==1:
-            return 0
-        return self.interation(0,0)
+        m=len(obstacleGrid)
+        n=len(obstacleGrid[0])
+        dp=[[0 for i in xrange(n)] for j in xrange(m)]
 
-    def interation(self,m,n):
-        if self.matrix[m][n]!=-1:
-            return self.matrix[m][n]
-        if m+1<self.m and self.obstacleGrid[m+1][n]==0:
-            if n+1<self.n and self.obstacleGrid[m][n+1]==0:
-                self.matrix[m][n]=self.interation(m+1,n)+self.interation(m,n+1)
-            else:
-                self.matrix[m][n] = self.interation(m + 1, n)
-        else:
-            if n+1<self.n and self.obstacleGrid[m][n+1]==0:
-                self.matrix[m][n]=self.interation(m,n+1)
-            else:
-                self.matrix[m][n] = 0
-        return self.matrix[m][n]
+        x=m-1
+        while x>=0:
+            y=n-1
+            while y>=0:
+                if obstacleGrid[x][y]==1:
+                    dp[x][y]=0
+                else:
+                    if x+1<m :
+                        if y+1<n:
+                            dp[x][y]=dp[x+1][y]+dp[x][y+1]
+                        else:
+                            dp[x][y] = dp[x + 1][y]
+                    else:
+                        if y+1<n:
+                            dp[x][y]=dp[x][y+1]
+                        else:
+                            dp[x][y] = 1
+                y-=1
+            x-=1
+        return dp[0][0]
 s=Solution()
 print s.uniquePaths(3,7)
