@@ -1,4 +1,7 @@
-for i in xrange(10):
-    if i==5:
-        continue
-    print i
+class Solution(object):
+    def getPermutation(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: str
+        """
