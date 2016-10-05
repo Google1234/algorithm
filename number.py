@@ -1,32 +1,22 @@
 class Solution(object):
-    def uniquePathsWithObstacles(self, obstacleGrid):
+    def minPathSum(self, grid):
         """
-        :type obstacleGrid: List[List[int]]
+        :type grid: List[List[int]]
         :rtype: int
         """
-        m=len(obstacleGrid)
-        n=len(obstacleGrid[0])
-        dp=[[0 for i in xrange(n)] for j in xrange(m)]
-
-        x=m-1
-        while x>=0:
-            y=n-1
-            while y>=0:
-                if obstacleGrid[x][y]==1:
-                    dp[x][y]=0
-                else:
-                    if x+1<m :
-                        if y+1<n:
-                            dp[x][y]=dp[x+1][y]+dp[x][y+1]
-                        else:
-                            dp[x][y] = dp[x + 1][y]
+        m=len(grid)
+        n=len(grid[0])
+        dp=[[0 for i in xrange(n)]for j in xrange(m)]
+        for x in xrange(m):
+            for y in xrange(n):
+                if x-1>=0:
+                    if y-1>=0:
+                        dp[x][y]=grid[x][y]+min(dp[x][y-1],dp[x-1][y])
                     else:
-                        if y+1<n:
-                            dp[x][y]=dp[x][y+1]
-                        else:
-                            dp[x][y] = 1
-                y-=1
-            x-=1
-        return dp[0][0]
-s=Solution()
-print s.uniquePaths(3,7)
+                        dp[x][y] = grid[x][y] + dp[x - 1][y]
+                else:
+                    if y-1>=0:
+                        dp[x][y] = grid[x][y] + dp[x][y-1]
+                    else:
+                        dp[x][y]=grid[x][y]
+        return dp[m-1][n-1]
