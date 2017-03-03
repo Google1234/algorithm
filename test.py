@@ -1,63 +1,51 @@
-class Solution(object):
-    def findLadders(self, beginWord, endWord, wordList):
-        """
-        :type beginWord: str
-        :type endWord: str
-        :type wordList: List[str]
-        :rtype: List[List[str]]
-        """
-        words=set(wordList)
-        prev_dic={}
-        for word in words:
-            prev_dic[word]=[]
-        prev_dic[endWord]=[]
-        befores=set()
-        befores.add(beginWord)
-        ends=set()
-        ends.add(endWord)
-        import sys
-        _min=sys.maxint
-        dis=1
-        forward=True
-        while len(befores)>0:
-            words-=befores
-            candinates=set()
-            dis+=1
-            if dis>_min:
-                break
-            for word in befores:
-                candinate=words&set([word[:i]+c+word[i+1:] for c in 'abcdefghijklmnopqrstuvwxyz' for i in range(len(beginWord))])
-                for cc in candinate:
-                    if forward:
-                    	prev_dic[cc].append(word)
-                    else:
-                        prev_dic[word].append(cc)
-                candinates|=candinate
-            if candinates&ends:
-                _min=dis
-            befores=candinates
-            if len(befores)>len(ends):
-                ends,befores=befores,ends
-                forward=not forward
-        if _min==sys.maxint:
-            return []
-        else:
-            self.rst=[]
-            self.endword=endWord
-            self.buff=['' for i in range(_min)]
-            self.prev=prev_dic
-            index=_min-1
-            self.dfs(index,endWord)
-            return self.rst
-    def dfs(self,index,word):
-        self.buff[index]=word
-        if index==0:
-            self.rst.append([cc for cc in self.buff])
-        else:
-            for cc in self.prev[word]:
-                self.dfs(index-1,cc)
+# Definition for singly-linked list.
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None
 
+class Solution(object):
+    def sortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        pointer1=head
+        while pointer1.next!=None:
+            if pointer1.next.val>=pointer1.val:
+                pointer1=pointer1.next
+            else:
+                break
+        if pointer1.next==None:
+            return head
+        else:
+            pointer2 = self.sortList(pointer1.next)
+            pointer1.next = None
+            pointer1=head
+            start=pointer=ListNode(0)
+            while pointer1!=None and pointer2!=None:
+                if pointer1.val<pointer2.val:
+                    pointer.next=pointer1
+                    pointer1=pointer1.next
+                else:
+                    pointer.next=pointer2
+                    pointer2=pointer2.next
+                pointer=pointer.next
+            if pointer1==None:
+                pointer.next=pointer2
+            else:
+                pointer.next=pointer1
+            return start.next
+a=ListNode(3)
+b=ListNode(2)
+c=ListNode(5)
+d=ListNode(8)
+e=ListNode(4)
+f=ListNode(6)
+a.next=b
+b.next=c
+c.next=d
+d.next=e
+e.next=f
 s=Solution()
-print s.findLadders("hit",
-"cog",
-["hot","dot","dog","lot","log","cog"])
+print s.sortList(a)

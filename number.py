@@ -1,29 +1,25 @@
 class Solution(object):
-    def evalRPN(self, tokens):
+    def maxProduct(self, nums):
         """
-        :type tokens: List[str]
+        :type nums: List[int]
         :rtype: int
         """
-        pointer1=0
-        pointer2=1
-        while pointer2<len(tokens):
-            if tokens[pointer2]=='+':
-                tokens[pointer1-1]=int(tokens[pointer1-1])+int(tokens[pointer1])
-                pointer1-=1
-            elif tokens[pointer2]=='-':
-                tokens[pointer1-1]=int(tokens[pointer1-1])-int(tokens[pointer1])
-                pointer1-=1
-            elif tokens[pointer2]=='*':
-                tokens[pointer1-1]=int(tokens[pointer1-1])*int(tokens[pointer1])
-                pointer1-=1
-            elif tokens[pointer2]=='/':
-                tokens[pointer1-1]=int(tokens[pointer1-1])*1.0/int(tokens[pointer1])
-                pointer1-=1
+        p_max=[]
+        n_min=[]
+        p_max.append(1)
+        n_min.append(1)
+        global_max=nums[0]
+        for num in nums:
+            if num>0:
+                p_max.append(max(num,p_max[-1]*num))
+                n_min.append(min(num,n_min[-2]*num))
             else:
-                pointer1+=1
-                tokens[pointer1]=tokens[pointer2]
-            pointer2+=1
-        return int(tokens[0])
+                p_max.append(max(num,n_min[-1]*num))
+                n_min.append(min(num,p_max[-2]*num))
+            if p_max[-1]>global_max:
+                global_max=p_max[-1]
+        return global_max
+
 
 s=Solution()
-print s.evalRPN(["10","6","9","3","+","-11","*","/","*","17","+","5","+"])
+print s.maxProduct([-4,-3,-2])
