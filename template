@@ -1,0 +1,29 @@
+# python 斐波拉契数列O(logN)求解
+#参考 http://www.cnblogs.com/python27/archive/2011/11/25/2261980.html
+def F(n):
+    if n==1:
+        return [1,1,1,0]
+    if n%2==0:
+        a11,a12,a21,a22=F(n/2)
+        return [a11*a11+a12*a21,
+                a11*a12+a12*a22,
+                a21*a11+a22*a21,
+                a21*a12+a22*a22]
+    else:
+        a11,a12,a21,a22=F(n/2)
+        a11, a12, a21, a22=\
+                [a11*a11+a12*a21,
+                a11*a12+a12*a22,
+                a21*a11+a22*a21,
+                a21*a12+a22*a22]
+        return [a11*1+a12*1,
+                a11*1,
+                a21*1+a22*1,
+                a21*a12]
+def solution(N):
+    if N==0:
+        return 0
+    if N==1:
+        return 1
+    a11, a12, a21, a22 = F(N-1)
+    return a11
